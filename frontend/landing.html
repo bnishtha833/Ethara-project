@@ -9,38 +9,52 @@
   <style>
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-      padding: 80px 24px;
-      max-width: 1200px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      padding: 100px 24px;
+      max-width: 1400px;
       margin: 0 auto;
-    }
-    .feature-card {
-      text-align: left;
-    }
-    .feature-icon {
-      width: 60px; height: 60px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; margin-bottom: 24px;
     }
     .landing-nav {
       position: fixed; top: 0; width: 100%;
-      padding: 24px 40px;
+      padding: 20px 60px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 1000;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
       background: rgba(255, 255, 255, 0.8);
       border-bottom: 1px solid var(--glass-border);
     }
     .hero-img {
-      max-width: 1000px; width: 90%;
-      border-radius: 32px;
-      box-shadow: 0 40px 80px rgba(212, 175, 55, 0.15);
-      margin-top: 60px;
+      max-width: 1100px; width: 95%;
+      border-radius: 40px;
+      box-shadow: 0 60px 120px rgba(212, 175, 55, 0.12);
+      margin-top: 80px;
       border: 1px solid var(--glass-border);
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .hero-img:hover { transform: scale(1.02) translateY(-10px); }
+    
+    /* Bento Card Variants for Landing */
+    .bento-card-large { grid-column: span 8; }
+    .bento-card-small { grid-column: span 4; }
+    
+    .scroll-reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+    .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+    
+    .feature-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(212,175,55,0.1);
+      color: var(--primary);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
     }
   </style>
 </head>
@@ -71,20 +85,36 @@
     </section>
 
     <section id="features" class="feature-grid">
-      <div class="glass-card feature-card">
-        <div class="feature-icon">💎</div>
-        <h3>Glassmorphism UI</h3>
-        <p class="text-muted" style="margin-top:12px">A breathtaking interface that feels alive. Blurred surfaces, neon accents, and fluid animations throughout.</p>
+      <div class="glass-card bento-card-large scroll-reveal" style="display: flex; flex-direction: row; gap: 40px; align-items: center; padding: 60px;">
+        <div style="flex: 1;">
+          <span class="feature-tag">Experience</span>
+          <h3 style="font-size: 32px; margin-bottom: 16px;">Next-Gen Glassmorphism</h3>
+          <p class="text-muted" style="font-size: 18px;">A breathtaking interface that feels alive. Our unique design system blends transparency, blur, and golden light to create a workspace you'll actually love using.</p>
+        </div>
+        <div style="flex: 1; height: 200px; background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 80px;">💎</div>
       </div>
-      <div class="glass-card feature-card">
-        <div class="feature-icon">🛡️</div>
-        <h3>Role-Based Access</h3>
-        <p class="text-muted" style="margin-top:12px">Powerful controls for Admins and Members. Keep your projects organized and your team focused.</p>
+      
+      <div class="glass-card bento-card-small scroll-reveal" style="padding: 40px;">
+        <span class="feature-tag">Security</span>
+        <div style="font-size: 40px; margin-bottom: 24px;">🛡️</div>
+        <h3 style="margin-bottom: 12px;">Role-Based Controls</h3>
+        <p class="text-muted">Precision access for every team member. Keep sensitive data safe while empowering your team with the right tools.</p>
       </div>
-      <div class="glass-card feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>Real-time Analytics</h3>
-        <p class="text-muted" style="margin-top:12px">Track progress at a glance with beautiful dashboards and real-time task status updates.</p>
+
+      <div class="glass-card bento-card-small scroll-reveal" style="padding: 40px;">
+        <span class="feature-tag">Speed</span>
+        <div style="font-size: 40px; margin-bottom: 24px;">⚡</div>
+        <h3 style="margin-bottom: 12px;">Instant Insights</h3>
+        <p class="text-muted">Real-time task tracking and project health metrics delivered through high-performance data streams.</p>
+      </div>
+
+      <div class="glass-card bento-card-large scroll-reveal" style="display: flex; flex-direction: row-reverse; gap: 40px; align-items: center; padding: 60px;">
+        <div style="flex: 1;">
+          <span class="feature-tag">Growth</span>
+          <h3 style="font-size: 32px; margin-bottom: 16px;">Scalable Infrastructure</h3>
+          <p class="text-muted" style="font-size: 18px;">Built for small teams that aim for the moon. Nexus scales seamlessly from your first project to your global operations.</p>
+        </div>
+        <div style="flex: 1; height: 200px; background: linear-gradient(225deg, rgba(212,175,55,0.1), transparent); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 80px;">🚀</div>
       </div>
     </section>
 
@@ -106,10 +136,22 @@
     // Simple parallax effect for hero glow
     document.addEventListener('mousemove', e => {
       const glow = document.querySelector('.hero-glow');
+      if (!glow) return;
       const x = (e.clientX / window.innerWidth - 0.5) * 40;
       const y = (e.clientY / window.innerHeight - 0.5) * 40;
       glow.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
     });
+
+    // Intersection Observer for scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
