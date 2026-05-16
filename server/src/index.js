@@ -16,10 +16,10 @@ app.use(express.json());
 
 // Landing page must be before static middleware (which auto-serves index.html for /)
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/landing.html'));
+  res.sendFile(path.join(__dirname, '../../client/landing.html'));
 });
 
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../../client')));
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
@@ -28,7 +28,7 @@ app.use('/api/tasks', require('./routes/tasks'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, '../../client/index.html'));
 });
 
 // Initialize DB first, then start server
