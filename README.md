@@ -43,14 +43,14 @@ The app will be running at `http://localhost:3000`.
 
 ## 🚢 Deployment
 
-### Railway (Recommended)
+### Railway (Zero-Config)
 1.  **Fork** this repository to your GitHub.
 2.  Go to [Railway.app](https://railway.app) and create a new project.
 3.  Connect your GitHub repository.
-4.  Add the following **Variables**:
-    - `JWT_SECRET`: A long random string.
-    - `DB_PATH`: `/app/data/taskmanager.db` (or any path you prefer).
-5.  (Optional) Add a **Volume** at `/app/data` to ensure your database survives restarts.
+4.  **Click Deploy.** That's it!
+
+> [!NOTE]
+> Nexus is configured with **Automatic Defaults**. You do NOT need to enter any environment variables manually. It will work out of the box with built-in secrets and database paths.
 
 For more detailed instructions, including Docker and VPS, please refer to the [DEPLOYMENT.md](./DEPLOYMENT.md) guide.
 

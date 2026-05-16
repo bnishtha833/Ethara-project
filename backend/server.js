@@ -6,6 +6,10 @@ const db = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || 'nexus_super_secret_default_key_2026';
+
+// Export for other routes
+app.set('jwt_secret', JWT_SECRET);
 
 app.use(cors());
 app.use(express.json());
