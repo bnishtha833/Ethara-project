@@ -43,7 +43,16 @@ The app will be running at `http://localhost:3000`.
 
 ## 🚢 Deployment
 
-For full instructions on how to deploy this project to production (Render, Docker, VPS, etc.), please refer to the [DEPLOYMENT.md](./DEPLOYMENT.md) guide.
+### Railway (Recommended)
+1.  **Fork** this repository to your GitHub.
+2.  Go to [Railway.app](https://railway.app) and create a new project.
+3.  Connect your GitHub repository.
+4.  Add the following **Variables**:
+    - `JWT_SECRET`: A long random string.
+    - `DB_PATH`: `/app/data/taskmanager.db` (or any path you prefer).
+5.  (Optional) Add a **Volume** at `/app/data` to ensure your database survives restarts.
+
+For more detailed instructions, including Docker and VPS, please refer to the [DEPLOYMENT.md](./DEPLOYMENT.md) guide.
 
 ## 📄 License
 This project is for demonstration purposes.
