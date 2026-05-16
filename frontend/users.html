@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Team Members — Nexus</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="app-layout">
+  <aside class="nav-island">
+    <div class="sidebar-logo"><span class="gradient-text">Nexus</span></div>
+    <nav style="flex:1">
+      <div class="nav-section">
+        <a class="nav-link" data-page="dashboard" href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a>
+        <a class="nav-link" data-page="projects" href="projects.html"><span class="nav-icon">📁</span> Projects</a>
+        <a class="nav-link" data-page="tasks" href="tasks.html"><span class="nav-icon">✅</span> Tasks</a>
+      </div>
+      <div class="nav-section" id="admin-nav" style="margin-top: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; padding-left: 16px; letter-spacing: 0.1em;">Admin</div>
+        <a class="nav-link active" data-page="users" href="users.html"><span class="nav-icon">👥</span> Team Members</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-user" style="margin-bottom: 12px;"></div>
+      <button class="nav-link" onclick="doLogout()" style="width:100%; text-align:left; color:var(--danger); background:none; border:none; cursor:pointer"><span class="nav-icon">🚪</span> Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header animate-in">
+      <h1 class="gradient-text">Team Members</h1>
+      <p class="text-muted">Manage all Nexus users and their platform roles.</p>
+    </div>
+
+    <div class="toolbar animate-in" style="animation-delay: 0.1s">
+      <div class="form-control" style="max-width:300px; display:flex; align-items:center; gap:10px; background: hsla(0,0%,100%,0.05)">
+        <span>🔍</span>
+        <input id="search-users" style="background:none; border:none; color:inherit; outline:none; width:100%" placeholder="Search members..." oninput="filterUsers()"/>
+      </div>
+    </div>
+
+    <div class="glass-card animate-in" style="padding: 0; overflow: hidden; animation-delay: 0.2s">
+      <div class="table-wrap">
+        <table style="width:100%; border-collapse: collapse;">
+          <thead style="background: hsla(0,0%,100%,0.03); border-bottom: 1px solid var(--glass-border);">
+            <tr>
+              <th style="padding: 16px 24px; text-align:left; font-size: 13px; color: var(--text-muted);">Member</th>
+              <th style="padding: 16px 24px; text-align:left; font-size: 13px; color: var(--text-muted);">Email</th>
+              <th style="padding: 16px 24px; text-align:left; font-size: 13px; color: var(--text-muted);">Role</th>
+              <th style="padding: 16px 24px; text-align:left; font-size: 13px; color: var(--text-muted);">Joined</th>
+            </tr>
+          </thead>
+          <tbody id="users-table">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:48px">Loading Nexus team...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+<script src="js/api.js"></script>
+<script>
+if (!requireAuth()) throw new Error();
+const currentUser = getUser();
+if (currentUser.role !== 'admin') { window.location.href = '/dashboard.html'; }
+setActiveNav('users');
+renderSidebarUser();
+
+let allUsers = [];
+async function loadUsers() {
+  try {
+    allUsers = await apiFetch('/users');
+    renderUsers(allUsers);
+  } catch (e) { showToast(e.message, 'error'); }
+}
+function renderUsers(users) {
+  const tb = document.getElementById('users-table');
+  if (!users.length) {
+    tb.innerHTML = '<tr><td colspan="4" class="empty-state">No users found</td></tr>';
+    return;
+  }
+  tb.innerHTML = users.map(u => `
+    <tr style="border-bottom: 1px solid hsla(0,0%,100%,0.02)">
+      <td style="padding: 16px 24px;"><div class="assignee-chip" style="display:flex; align-items:center; gap:12px;"><div class="user-avatar" style="width:32px; height:32px; font-size:12px;">${initials(u.name)}</div><span style="font-weight:600">${u.name}</span></div></td>
+      <td style="padding: 16px 24px; color:var(--text-muted)">${u.email}</td>
+      <td style="padding: 16px 24px;">
+        <span class="user-role ${u.role}">${u.role === 'admin' ? '👑 Admin' : '👤 Member'}</span>
+      </td>
+      <td style="padding: 16px 24px; color:var(--text-dim); font-size: 13px;">${fmtDate(u.created_at)}</td>
+    </tr>`).join('');
+}
+function filterUsers() {
+  const q = document.getElementById('search-users').value.toLowerCase();
+  renderUsers(allUsers.filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)));
+}
+loadUsers();
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexus — Connect. Collaborate. Conquer.</title>
+  <meta name="description" content="Nexus is a premium team task manager designed for high-performance teams. Experience glassmorphism aesthetics with powerful collaboration tools."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      text-align: left;
+    }
+    .feature-icon {
+      width: 60px; height: 60px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 24px;
+    }
+    .landing-nav {
+      position: fixed; top: 0; width: 100%;
+      padding: 24px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .hero-img {
+      max-width: 1000px; width: 90%;
+      border-radius: 32px;
+      box-shadow: 0 40px 80px rgba(212, 175, 55, 0.15);
+      margin-top: 60px;
+      border: 1px solid var(--glass-border);
+    }
+  </style>
+</head>
+<body>
+  <nav class="landing-nav">
+    <div class="sidebar-logo" style="margin-bottom:0">
+      <span class="gradient-text">Nexus</span>
+    </div>
+    <div style="display:flex; gap: 20px;">
+      <a href="index.html" class="btn btn-secondary">Sign In</a>
+      <a href="index.html?tab=signup" class="btn btn-primary">Get Started</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="landing-hero animate-in">
+      <div class="hero-glow"></div>
+      <h1 class="hero-title">Your Team's <span class="gradient-text">Nexus</span> of Success.</h1>
+      <p class="hero-subtitle">
+        The most beautiful, powerful, and intuitive team task manager ever built. 
+        Elevate your workflow with stunning aesthetics and seamless collaboration.
+      </p>
+      <div style="display:flex; gap: 20px; justify-content:center;">
+        <a href="index.html?tab=signup" class="btn btn-primary" style="padding: 18px 40px; font-size: 18px;">Start Building for Free</a>
+        <a href="#features" class="btn btn-secondary" style="padding: 18px 40px; font-size: 18px;">Watch Demo</a>
+      </div>
+      <img src="zenith_hero_image_1778911797937.png" alt="Nexus Interface" class="hero-img"/>
+    </section>
+
+    <section id="features" class="feature-grid">
+      <div class="glass-card feature-card">
+        <div class="feature-icon">💎</div>
+        <h3>Glassmorphism UI</h3>
+        <p class="text-muted" style="margin-top:12px">A breathtaking interface that feels alive. Blurred surfaces, neon accents, and fluid animations throughout.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Role-Based Access</h3>
+        <p class="text-muted" style="margin-top:12px">Powerful controls for Admins and Members. Keep your projects organized and your team focused.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Real-time Analytics</h3>
+        <p class="text-muted" style="margin-top:12px">Track progress at a glance with beautiful dashboards and real-time task status updates.</p>
+      </div>
+    </section>
+
+    <section style="text-align:center; padding: 120px 24px; background: rgba(212, 175, 55, 0.03);">
+      <h2 style="font-size: 48px; margin-bottom: 24px;">Ready to reach the peak?</h2>
+      <p class="text-muted" style="max-width: 600px; margin: 0 auto 48px;">Join thousands of high-performance teams already using Nexus to power their daily operations.</p>
+      <a href="index.html?tab=signup" class="btn btn-primary" style="padding: 18px 48px; font-size: 18px;">Create Your Account</a>
+    </section>
+  </main>
+
+  <footer style="padding: 60px 24px; text-align:center; border-top: 1px solid var(--glass-border);">
+    <div class="sidebar-logo" style="margin-bottom:16px; justify-content:center">
+      <span class="gradient-text">Nexus</span>
+    </div>
+    <p class="text-dim">&copy; 2026 Nexus Task Manager. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Simple parallax effect for hero glow
+    document.addEventListener('mousemove', e => {
+      const glow = document.querySelector('.hero-glow');
+      const x = (e.clientX / window.innerWidth - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      glow.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px)`;
+    });
+  </script>
+</body>
+</html>

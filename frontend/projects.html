@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Projects — Nexus</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .color-swatch { width:32px; height:32px; border-radius:50%; cursor:pointer; border:3px solid transparent; transition:all 0.2s; }
+    .color-swatch.active { border-color: white; transform:scale(1.1); box-shadow: 0 0 15px currentColor; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+  <aside class="nav-island">
+    <div class="sidebar-logo"><span class="gradient-text">Nexus</span></div>
+    <nav style="flex:1">
+      <div class="nav-section">
+        <a class="nav-link" data-page="dashboard" href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a>
+        <a class="nav-link" data-page="projects" href="projects.html"><span class="nav-icon">📁</span> Projects</a>
+        <a class="nav-link" data-page="tasks" href="tasks.html"><span class="nav-icon">✅</span> Tasks</a>
+      </div>
+      <div class="nav-section" id="admin-nav" style="display:none; margin-top: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; padding-left: 16px; letter-spacing: 0.1em;">Admin</div>
+        <a class="nav-link" data-page="users" href="users.html"><span class="nav-icon">👥</span> Team Members</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-user" style="margin-bottom: 12px;"></div>
+      <button class="nav-link" onclick="doLogout()" style="width:100%; text-align:left; color:var(--danger); background:none; border:none; cursor:pointer"><span class="nav-icon">🚪</span> Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header animate-in">
+      <div class="flex items-center justify-between">
+        <div><h1 class="gradient-text">Projects</h1><p class="text-muted">Manage your Nexus workspaces and team assignments.</p></div>
+        <button class="btn btn-primary" id="new-project-btn" onclick="openProjectModal()" style="display:none">+ New Project</button>
+      </div>
+    </div>
+
+    <div class="toolbar animate-in" style="animation-delay: 0.1s">
+      <div class="toolbar-left">
+        <div class="form-control" style="max-width:300px; display:flex; align-items:center; gap:10px; background: hsla(0,0%,100%,0.05)">
+          <span>🔍</span>
+          <input id="search-projects" style="background:none; border:none; color:inherit; outline:none; width:100%" placeholder="Search projects..." oninput="filterProjects()"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-grid animate-in" id="projects-grid" style="animation-delay: 0.2s">
+      <div style="grid-column:1/-1" class="empty-state"><div class="empty-icon">📁</div><h3>Loading projects...</h3></div>
+    </div>
+  </main>
+</div>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="project-modal">
+  <div class="glass-card auth-card" style="max-width:520px; padding: 40px;">
+    <div class="flex items-center justify-between mb-6">
+      <h2 id="proj-modal-title">New Project</h2>
+      <button class="btn btn-secondary btn-icon" onclick="closeProjectModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Project Name *</label>
+      <input id="proj-name" class="form-control" placeholder="e.g. Website Redesign"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea id="proj-desc" class="form-control" rows="3" placeholder="Brief project description..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Accent Color</label>
+      <div style="display:flex;gap:12px;flex-wrap:wrap" id="color-picker">
+        <div class="color-swatch" data-color="#6366f1" style="background:#6366f1"></div>
+        <div class="color-swatch" data-color="#f472b6" style="background:#f472b6"></div>
+        <div class="color-swatch" data-color="#34d399" style="background:#34d399"></div>
+        <div class="color-swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+        <div class="color-swatch" data-color="#ef4444" style="background:#ef4444"></div>
+        <div class="color-swatch" data-color="#06b6d4" style="background:#06b6d4"></div>
+        <div class="color-swatch" data-color="#8b5cf6" style="background:#8b5cf6"></div>
+      </div>
+    </div>
+    <div class="flex gap-3" style="justify-content:flex-end; margin-top: 32px;">
+      <button class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+      <button class="btn btn-primary" id="proj-save-btn" onclick="saveProject()">Create Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- Members Modal -->
+<div class="modal-overlay" id="members-modal">
+  <div class="glass-card auth-card" style="max-width:520px; padding: 40px;">
+    <div class="flex items-center justify-between mb-6">
+      <h2>Manage Members</h2>
+      <button class="btn btn-secondary btn-icon" onclick="closeMembersModal()">✕</button>
+    </div>
+    <div id="members-list" style="margin-bottom:24px"></div>
+    <div style="font-size:14px; font-weight:600; margin-bottom:12px; color:var(--text-muted)">Add Member</div>
+    <div class="flex gap-3">
+      <select id="add-member-select" class="form-control" style="flex:1"></select>
+      <button class="btn btn-primary" onclick="addMember()">Add</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/api.js"></script>
+<script src="js/projects.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexus — Sign In / Create Account</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="auth-page">
+  <div class="hero-glow" style="top: 0; width: 100vw; height: 100vh;"></div>
+  
+  <div class="auth-card animate-in">
+    <div style="text-align:center; margin-bottom: 40px;">
+      <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+      <h1 class="gradient-text" style="font-size: 32px;">Nexus</h1>
+      <p class="text-muted" style="margin-top:8px">Enter your credentials to continue.</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-form">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input id="login-email" class="form-control" type="email" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input id="login-password" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <button class="btn btn-primary" style="width:100%" id="login-btn" onclick="doLogin()">
+        Sign In
+      </button>
+      <div id="login-error" class="hidden" style="color:var(--danger);font-size:14px;margin-top:16px;text-align:center"></div>
+      
+      <div style="margin-top: 32px; padding: 16px; background: var(--glass); border-radius: 12px; font-size: 13px; color: var(--text-muted);">
+        🎯 <strong>Demo Accounts:</strong><br/>
+        admin@demo.com or member@demo.com<br/>
+        Password: <strong>demo123</strong>
+      </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signup-form" class="hidden">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input id="signup-name" class="form-control" type="text" placeholder="Jane Smith"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input id="signup-email" class="form-control" type="email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input id="signup-password" class="form-control" type="password" placeholder="Min. 6 characters"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Role</label>
+        <div class="role-select">
+          <div class="role-option selected" id="role-admin" onclick="selectRole('admin')">
+            <div class="role-icon">👑</div>
+            <div class="role-name">Admin</div>
+          </div>
+          <div class="role-option" id="role-member" onclick="selectRole('member')">
+            <div class="role-icon">👤</div>
+            <div class="role-name">Member</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" id="signup-btn" onclick="doSignup()">
+        Create Account
+      </button>
+      <div id="signup-error" class="hidden" style="color:var(--danger);font-size:14px;margin-top:16px;text-align:center"></div>
+    </div>
+
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="landing.html" class="text-dim" style="text-decoration:none; font-size: 14px;">&larr; Back to Landing Page</a>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Handle tab from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'signup') {
+      switchTab('signup');
+    }
+  </script>
+</body>
+</html>

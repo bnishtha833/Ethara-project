@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dashboard — Nexus</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="app-layout">
+  <!-- Navigation Island -->
+  <aside class="nav-island" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="gradient-text">⚡ Nexus</span>
+    </div>
+    <nav style="flex:1">
+      <div class="nav-section">
+        <a class="nav-link" data-page="dashboard" href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a>
+        <a class="nav-link" data-page="projects" href="projects.html"><span class="nav-icon">📁</span> Projects</a>
+        <a class="nav-link" data-page="tasks" href="tasks.html"><span class="nav-icon">✅</span> Tasks</a>
+      </div>
+      <div class="nav-section" id="admin-nav" style="display:none; margin-top: 24px;">
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; padding-left: 16px; letter-spacing: 0.1em; font-weight:600">Admin</div>
+        <a class="nav-link" data-page="users" href="users.html"><span class="nav-icon">👥</span> Team Members</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-user" style="margin-bottom: 10px;"></div>
+      <button class="nav-link" onclick="doLogout()" style="width:100%; text-align:left; color:var(--danger); background:none; border:none; cursor:pointer; font-family:inherit"><span class="nav-icon">🚪</span> Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <!-- Bento Architecture Layout -->
+    <div class="bento-grid animate-in">
+      
+      <!-- Welcome Hero Block (Spans 8 columns) -->
+      <div class="bento-card bento-col-8" style="background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.02) 100%); justify-content: center; padding: 40px;">
+        <h1 id="welcome-msg" class="gradient-text" style="font-size: 36px; margin-bottom: 8px;">Good morning! 👋</h1>
+        <p class="text-muted" style="font-size: 16px;">Here's your Nexus overview for today.</p>
+      </div>
+
+      <!-- Quick Action / Total Projects (Spans 4 columns) -->
+      <div class="bento-card bento-col-4" id="stat-projects-card" style="justify-content: center; align-items: center;">
+        <div class="stat-icon-wrapper">📁</div>
+        <div class="stat-value" id="stat-projects" style="color: #d4af37; font-size: 48px; font-weight: 800; line-height: 1;">—</div>
+        <div class="stat-label" style="margin-top: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 12px; color: var(--text-muted);">Active Projects</div>
+      </div>
+
+      <!-- 4 Stats (Span 3 columns each) -->
+      <div class="bento-card bento-col-3 stat-card">
+        <div class="stat-icon-wrapper">📋</div>
+        <div class="stat-value" id="stat-total" style="color: #d4af37; font-size: 32px; font-weight: 700; line-height: 1;">—</div>
+        <div class="stat-label" style="font-size: 12px; margin-top: 4px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Total Tasks</div>
+      </div>
+      <div class="bento-card bento-col-3 stat-card">
+        <div class="stat-icon-wrapper" style="background: rgba(170, 140, 44, 0.1);">✅</div>
+        <div class="stat-value" id="stat-done" style="color: #aa8c2c; font-size: 32px; font-weight: 700; line-height: 1;">—</div>
+        <div class="stat-label" style="font-size: 12px; margin-top: 4px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Completed</div>
+      </div>
+      <div class="bento-card bento-col-3 stat-card">
+        <div class="stat-icon-wrapper" style="background: rgba(229, 193, 88, 0.1);">🔄</div>
+        <div class="stat-value" id="stat-inprogress" style="color: #e5c158; font-size: 32px; font-weight: 700; line-height: 1;">—</div>
+        <div class="stat-label" style="font-size: 12px; margin-top: 4px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">In Progress</div>
+      </div>
+      <div class="bento-card bento-col-3 stat-card">
+        <div class="stat-icon-wrapper" style="background: rgba(197, 160, 23, 0.1);">⚠️</div>
+        <div class="stat-value" id="stat-overdue" style="color: #c5a017; font-size: 32px; font-weight: 700; line-height: 1;">—</div>
+        <div class="stat-label" style="font-size: 12px; margin-top: 4px; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Overdue</div>
+      </div>
+
+      <!-- Recent Tasks List (Spans 7 columns) -->
+      <div class="bento-card bento-col-7 bento-row-2" style="padding: 0; overflow: hidden;">
+        <div class="flex items-center justify-between" style="padding: 24px 28px 0;">
+          <h2 style="font-size:18px; font-weight:700;">Recent Tasks</h2>
+          <a href="tasks.html" class="btn btn-secondary btn-sm" style="background: rgba(212,175,55,0.05); border:none;">View All →</a>
+        </div>
+        <div id="recent-tasks" style="padding: 16px 28px 28px;">
+          <div class="empty-state"><div class="empty-icon">📋</div><h3>Loading...</h3></div>
+        </div>
+      </div>
+
+      <!-- Project Progress (Spans 5 columns) -->
+      <div class="bento-card bento-col-5 bento-row-2">
+        <div class="flex items-center justify-between mb-6">
+          <h2 style="font-size:18px; font-weight:700;">Project Health</h2>
+        </div>
+        <div id="project-progress">
+          <div class="empty-state"><div class="empty-icon">📁</div><h3>Loading...</h3></div>
+        </div>
+      </div>
+
+      <!-- Admin Only Element -->
+      <div class="bento-card bento-col-12 stat-card" id="stat-users-card" style="display:none; padding: 20px; align-items: center; text-align: center;">
+        <div class="stat-icon" style="margin-bottom: 10px;">👥</div>
+        <div class="stat-value" id="stat-users" style="color: #d4af37;">—</div>
+        <div class="stat-label">Team Members (Admin Panel)</div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
